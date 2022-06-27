@@ -2,13 +2,13 @@ song1 = "";
 song2 = "";
 
 song1_status = "";
-song2_staus = "";
+song2_status = "";
 
-scorRightWrist = 0;
+scoreRightWrist = 0;
 scoreLeftWrist = 0;
 
 rightWristX = 0;
-rightWrisY = 0;
+rightWristY = 0;
 
 leftWristX = 0;
 leftWristY = 0;
@@ -48,4 +48,41 @@ function gotPoses(results) {
         leftWristY = results[0].pose.leftWrist.y;
         console.log("leftWristsX = " + leftWristX + " leftWristY = " + leftWristY);
     }
+}
+
+function draw() {
+    Image(video, 0, 0, 600, 500);
+
+    song1_status = song1.isPlaying();
+    song2_status = song2.isPlaying();
+
+    fill("#008080");
+    stroke("#008080");
+
+    if (scoreRightWrist > 0.2) {
+        circle(rightWristX, rightWristY, 20);
+
+        song2.stop();
+
+        if (song1_status == false) {
+            song1.play()
+            document.getElementById("song").innerHTML = "Playing - Enemy";
+        }
+    }
+    if (scoreLeftWrist > 0.2) {
+        circle(leftWristX, leftWristY, 20);
+
+        song1.stop();
+
+        if (song2_status == false) {
+            song1.play()
+            document.getElementById("song").innerHTML = "Playing - Immortals";
+        }
+    }
+}
+
+function play() {
+    song.play();
+    song.setVolume(1);
+    song.rate(1);
 }
